@@ -4,9 +4,10 @@ import router from './router'
 import store from './store'
 
 Vue.config.productionTip = false
+module.exports = function createApp(context) {
+  const app = new Vue({
+    render: h => h(App)
+  })
+  return { app }
+}
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
