@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h1>{{ fooCount }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -31,10 +32,23 @@
 </template>
 
 <script>
+import fooStoreModule from '../store/modules/foo'
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  asyncData({store}) {
+    store.fooStoreModule('foo', fooStoreModule)
+    return store.dispatch('foo/inc')
+  },
+  destroyed () {
+    this.$store.unregisterModule('foo')
+  },
+  computed: {
+    fooCount () {
+      return this.$store.state.foo.count
+    }
   }
 }
 </script>
